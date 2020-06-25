@@ -126,8 +126,7 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
                         Toast.makeText(ProLoginRegisterActivity.this,"Successfully Logged In as a Professional",Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
 
-                        Intent ProfessionalIntent=new Intent(ProLoginRegisterActivity.this,ProfessionalsMapsActivity.class);
-                        startActivity(ProfessionalIntent);
+
                     }
 
                     else
@@ -169,8 +168,7 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
                     {
                         Toast.makeText(ProLoginRegisterActivity.this,"Successfully Registered as a Professional",Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
-                        Intent ProfessionalIntent=new Intent(ProLoginRegisterActivity.this,ProfessionalsMapsActivity.class);
-                        startActivity(ProfessionalIntent);
+
                     }
 
                     else
