@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustLoginRegisterActivity extends AppCompatActivity {
     private Button CustomerLoginButton;
@@ -27,8 +33,11 @@ public class CustLoginRegisterActivity extends AppCompatActivity {
     private EditText PasswordCustomer;
 
     private ProgressDialog loadingBar;
+    private EditText CustomerName;
+    private TextView CustomerForgotPassword;
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +51,16 @@ public class CustLoginRegisterActivity extends AppCompatActivity {
 
         EmailCustomer = (EditText) findViewById(R.id.Email_Customer);
         PasswordCustomer = (EditText) findViewById(R.id.Password_Customer);
+        CustomerName=(EditText)findViewById(R.id.Name_Customer);
+        CustomerForgotPassword=(TextView)findViewById(R.id.Forgot_Password_Customer);
 
         mAuth = FirebaseAuth.getInstance();
+        firebaseFirestore=FirebaseFirestore.getInstance();
 
         loadingBar = new ProgressDialog(this);
+
+        CustomerName.setVisibility(View.INVISIBLE);
+        CustomerName.setEnabled(false);
 
         CustomerRegisterButton.setVisibility(View.INVISIBLE);
         CustomerRegisterButton.setEnabled(false);
@@ -56,10 +71,13 @@ public class CustLoginRegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 CustomerLoginButton.setVisibility(v.INVISIBLE);
                 CustomerRegisterLink.setVisibility(v.INVISIBLE);
+                CustomerForgotPassword.setVisibility(v.INVISIBLE);
 
                 CustomerStatus.setText("Register Customer");
                 CustomerRegisterButton.setVisibility(v.VISIBLE);
                 CustomerRegisterButton.setEnabled(true);
+                CustomerName.setVisibility(v.VISIBLE);
+                CustomerName.setEnabled(true);
 
             }
         });
@@ -84,13 +102,23 @@ public class CustLoginRegisterActivity extends AppCompatActivity {
             }
         });
 
-
+        CustomerForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                onForgotPassword=true;
+                Intent forgotPassword=new Intent(CustLoginRegisterActivity.this,ForgotPassword.class);
+                startActivity(forgotPassword);
+            }
+        });
     }
+
+
 
     private void SignInCustomer(String email, String password) {
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(CustLoginRegisterActivity.this, "Please fill your email", Toast.LENGTH_SHORT).show();
+
         }
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(CustLoginRegisterActivity.this, "Please choose your password", Toast.LENGTH_SHORT).show();
@@ -105,6 +133,8 @@ public class CustLoginRegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Toast.makeText(CustLoginRegisterActivity.this, "Successfully Logged in  as a Customer", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
+                        Intent exist=new Intent(CustLoginRegisterActivity.this,MainActivity.class);
+                        startActivity(exist);
                     } else {
                         Toast.makeText(CustLoginRegisterActivity.this, "Login Unsuccessfull ,please login again...", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
@@ -133,10 +163,34 @@ public class CustLoginRegisterActivity extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
+                    if(task.isSuccessful())
+                    {
+                        Map<Object,String> userdata=new HashMap<>();
+                        userdata.put("name",CustomerName.getText().toString());
+
+                        firebaseFirestore.collection("CUSTOMERS").add(userdata).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(CustLoginRegisterActivity.this,"Name saved",Toast.LENGTH_SHORT).show();
+                                    loadingBar.dismiss();
+
+
+                                }
+                                else {
+                                    Toast.makeText(CustLoginRegisterActivity.this,"Name not Saved",Toast.LENGTH_SHORT).show();
+                                    loadingBar.dismiss();
+                                }
+                            }
+
+                    });
+
                         Toast.makeText(CustLoginRegisterActivity.this, "Successfully Registered as a Customer", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
-                    } else {
+                        Intent non_exist=new Intent(CustLoginRegisterActivity.this,MainActivity.class);
+                        startActivity(non_exist);
+                    }
+                    else {
                         Toast.makeText(CustLoginRegisterActivity.this, "Registration Unsuccessfull ,please register again...", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
                     }

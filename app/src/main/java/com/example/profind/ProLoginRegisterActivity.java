@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProLoginRegisterActivity extends AppCompatActivity {
 
@@ -27,8 +33,13 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
     private EditText EmailProfessional;
     private EditText PasswordProfessional;
     private ProgressDialog loadingBar;
+    private EditText ProfessionalName;
+    private TextView ProfessionalForgotPassword;
+
+    public static boolean onForgotPassword;
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore firebaseFirestore;
 
 
     @Override
@@ -46,10 +57,16 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
 
         EmailProfessional=(EditText)findViewById(R.id.Email_Professional);
         PasswordProfessional=(EditText)findViewById(R.id.Password_Professional);
+        ProfessionalName=(EditText)findViewById(R.id.Name_Professional);
+        ProfessionalForgotPassword=(TextView)findViewById(R.id.Forgot_Password_Professional);
+        firebaseFirestore=FirebaseFirestore.getInstance();
 
         mAuth=FirebaseAuth.getInstance();
 
         loadingBar=new ProgressDialog(this);
+
+        ProfessionalName.setVisibility(View.INVISIBLE);
+        ProfessionalName.setEnabled(false);
 
         ProfessionalRegisterButton.setVisibility(View.INVISIBLE);
         ProfessionalRegisterButton.setEnabled(false);
@@ -62,10 +79,13 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
             {
                 ProfessionalLoginButton.setVisibility(v.INVISIBLE);
                 ProfessionalRegisterLink.setVisibility(v.INVISIBLE);
+                ProfessionalForgotPassword.setVisibility(v.INVISIBLE);
 
                 professionalStatus.setText("Register as Professional");
                 ProfessionalRegisterButton.setVisibility(v.VISIBLE);
                 ProfessionalRegisterButton.setEnabled(true);
+                ProfessionalName.setVisibility(v.VISIBLE);
+                ProfessionalName.setEnabled(true);
 
             }
         });
@@ -98,8 +118,21 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
 
 
 
+        ProfessionalForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onForgotPassword=true;
+                Intent forgotPassword=new Intent(ProLoginRegisterActivity.this,ForgotPassword.class);
+                startActivity(forgotPassword);
+            }
+        });
+
+
+
 
     }
+
+
 
     private void SignInProfessional(String email, String password)
     {
@@ -125,6 +158,8 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
                     {
                         Toast.makeText(ProLoginRegisterActivity.this,"Successfully Logged In as a Professional",Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
+                        Intent exist=new Intent(ProLoginRegisterActivity.this,MainActivity.class);
+                        startActivity(exist);
 
 
                     }
@@ -166,8 +201,30 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
                 {
                     if(task.isSuccessful())
                     {
+                        Map<Object,String> userdata=new HashMap<>();
+                        userdata.put("name",ProfessionalName.getText().toString());
+
+                        firebaseFirestore.collection("PROFESSIONALS").add(userdata).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(ProLoginRegisterActivity.this,"Name saved",Toast.LENGTH_SHORT).show();
+                                    loadingBar.dismiss();
+
+
+                                }
+                                else {
+                                    Toast.makeText(ProLoginRegisterActivity.this,"Name not Saved",Toast.LENGTH_SHORT).show();
+                                    loadingBar.dismiss();
+                                }
+                            }
+                        });
+
+
                         Toast.makeText(ProLoginRegisterActivity.this,"Successfully Registered as a Professional",Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
+                        Intent non_exist=new Intent(ProLoginRegisterActivity.this,MainActivity.class);
+                        startActivity(non_exist);
 
                     }
 
@@ -181,5 +238,9 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
 
         }
     }
+
+
+
+
 }
 
