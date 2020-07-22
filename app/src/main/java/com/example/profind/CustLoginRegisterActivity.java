@@ -133,7 +133,7 @@ public class CustLoginRegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Toast.makeText(CustLoginRegisterActivity.this, "Successfully Logged in  as a Customer", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
-                        Intent exist=new Intent(CustLoginRegisterActivity.this,MainActivity.class);
+                        Intent exist=new Intent(CustLoginRegisterActivity.this,FindProfessionals.class);
                         startActivity(exist);
                     } else {
                         Toast.makeText(CustLoginRegisterActivity.this, "Login Unsuccessfull ,please login again...", Toast.LENGTH_SHORT).show();
@@ -187,7 +187,7 @@ public class CustLoginRegisterActivity extends AppCompatActivity {
 
                         Toast.makeText(CustLoginRegisterActivity.this, "Successfully Registered as a Customer", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
-                        Intent non_exist=new Intent(CustLoginRegisterActivity.this,MainActivity.class);
+                        Intent non_exist=new Intent(CustLoginRegisterActivity.this,FindProfessionals.class);
                         startActivity(non_exist);
                     }
                     else {

@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">ProFind</string>
     <string name="title_activity_professionals_maps">Map</string>
+    <string-array name="professions">
+        <item>Lawyer</item>
+        <item>Electrician/Plumber</item>
+        <item>Carpenter</item>
+        <item>Driver</item>
+        <item>Delivery Boy</item>
+        <item>Teacher</item>
+        <item>Electronics Repair</item>
+
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

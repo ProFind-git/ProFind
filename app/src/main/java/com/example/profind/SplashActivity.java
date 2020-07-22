@@ -9,8 +9,10 @@ import android.os.SystemClock;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 public class SplashActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(welcomeIntent);
 
                     } else {
-                        Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                        Intent mainIntent = new Intent(SplashActivity.this, Complete_UR_Profile.class);
                         startActivity(mainIntent);
                     }
 

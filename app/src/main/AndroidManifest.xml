@@ -19,7 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Transparent"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".ForgotPassword" android:screenOrientation="portrait"></activity>
+        <activity android:name=".FindProfessionals"></activity>
+        <activity android:name=".Complete_UR_Profile" />
+        <activity
+            android:name=".ForgotPassword"
+            android:screenOrientation="portrait" />
         <activity android:name=".MainActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -33,11 +37,18 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".CustLoginRegisterActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ProLoginRegisterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".WelcomeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".SplashActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".CustLoginRegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProLoginRegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

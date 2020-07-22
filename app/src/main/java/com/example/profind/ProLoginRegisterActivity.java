@@ -38,6 +38,7 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
 
     public static boolean onForgotPassword;
 
+    public boolean profileCompleted=false;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
 
@@ -223,7 +224,7 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
 
                         Toast.makeText(ProLoginRegisterActivity.this,"Successfully Registered as a Professional",Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
-                        Intent non_exist=new Intent(ProLoginRegisterActivity.this,MainActivity.class);
+                        Intent non_exist=new Intent(ProLoginRegisterActivity.this,Complete_UR_Profile.class);
                         startActivity(non_exist);
 
                     }
