@@ -17,6 +17,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -187,8 +190,12 @@ public class CustLoginRegisterActivity extends AppCompatActivity {
 
                         Toast.makeText(CustLoginRegisterActivity.this, "Successfully Registered as a Customer", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
-                        Intent non_exist=new Intent(CustLoginRegisterActivity.this,FindProfessionals.class);
-                        startActivity(non_exist);
+                        String customerName=CustomerName.getEditableText().toString();
+                        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+                        DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Customer").child(user.getUid());
+                        ref.child("name").setValue(customerName);
+                        Intent cust=new Intent(CustLoginRegisterActivity.this,FindProfessionals.class);
+                        startActivity(cust);
                     }
                     else {
                         Toast.makeText(CustLoginRegisterActivity.this, "Registration Unsuccessfull ,please register again...", Toast.LENGTH_SHORT).show();

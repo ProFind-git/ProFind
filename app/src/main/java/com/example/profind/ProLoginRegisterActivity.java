@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -224,8 +227,15 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
 
                         Toast.makeText(ProLoginRegisterActivity.this,"Successfully Registered as a Professional",Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
-                        Intent non_exist=new Intent(ProLoginRegisterActivity.this,Complete_UR_Profile.class);
-                        startActivity(non_exist);
+                        String professionalName=ProfessionalName.getEditableText().toString();
+                        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+                        DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Professional").child(user.getUid());
+                        ref.child("name").setValue(professionalName);
+                        Intent startIntent = new Intent(ProLoginRegisterActivity.this,Complete_UR_Profile.class);
+                        startActivity(startIntent);
+//                        finish();
+//                        Intent non_exist=new Intent(ProLoginRegisterActivity.this,Complete_UR_Profile.class);
+//                        startActivity(non_exist);
 
                     }
 

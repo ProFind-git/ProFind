@@ -1,5 +1,6 @@
 package com.example.profind;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,6 +9,11 @@ import android.os.SystemClock;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -26,20 +32,41 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(2000);
+                    sleep(50);
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
 //                    Intent welcomeIntent=new Intent(SplashActivity.this,WelcomeActivity.class);
 //                    startActivity(welcomeIntent);
-                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-                    if (currentUser == null) {
-                        Intent welcomeIntent = new Intent(SplashActivity.this, WelcomeActivity.class);
-                        startActivity(welcomeIntent);
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    DatabaseReference profess = FirebaseDatabase.getInstance().getReference().child("Professional");
+                    DatabaseReference custom = FirebaseDatabase.getInstance().getReference().child("Customer");
 
-                    } else {
-                        Intent mainIntent = new Intent(SplashActivity.this, Complete_UR_Profile.class);
-                        startActivity(mainIntent);
+                    if (user != null) {
+                        profess.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                } else {
+                                    Intent intent = new Intent(SplashActivity.this, FindProfessionals.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+
+                    }
+                    else{
+                        Intent startIntent = new Intent(SplashActivity.this,WelcomeActivity.class);
+                        startActivity(startIntent);
                     }
 
                 }
