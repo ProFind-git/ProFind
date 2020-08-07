@@ -13,11 +13,29 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/profession"
+        android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="55dp"
+        android:text="Phone number"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/profession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="80dp"
         android:text="Developer"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="55dp"
+        android:text="City"
+        android:textSize="18sp"/>
 </RelativeLayout>

@@ -82,6 +82,8 @@ public class CustLoginRegisterActivity extends AppCompatActivity {
                 CustomerName.setVisibility(v.VISIBLE);
                 CustomerName.setEnabled(true);
 
+                Toast.makeText(CustLoginRegisterActivity.this,"Please Check your Connectivity",Toast.LENGTH_LONG).show();
+
             }
         });
         CustomerRegisterButton.setOnClickListener(new View.OnClickListener() {

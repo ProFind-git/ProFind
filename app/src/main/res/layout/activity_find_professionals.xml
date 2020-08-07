@@ -6,12 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".FindProfessionals">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="411dp"
+        android:layout_height="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025" />
+
     <TextView
         android:id="@+id/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="80dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         android:text="Find Professionals"
@@ -22,7 +33,7 @@
         android:layout_width="231dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="140dp"
         android:ems="10"
         android:hint="Search here"
         android:inputType="textPersonName" />
@@ -32,12 +43,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="280dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="140dp"
         android:text="@android:string/search_go" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Result_list"
         android:layout_width="match_parent"
-        android:layout_height="590dp"
-        android:layout_marginTop="150dp"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="498dp"
+        android:layout_marginTop="210dp"></androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>

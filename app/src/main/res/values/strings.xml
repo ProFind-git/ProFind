@@ -9,6 +9,18 @@
         <item>Delivery Boy</item>
         <item>Teacher</item>
         <item>Electronics Repair</item>
+        <item>Painter</item>
+        <item>Cook</item>
+        <item>Servant</item>
+        <item>Tailor</item>
+        <item>Water Supply</item>
+        <item>Laundry</item>
+        <item>Milk delivery</item>
+        <item>Artist</item>
+        <item>Interior/Exterior Designer</item>
+        <item>Other</item>
+
+
 
     </string-array>
 

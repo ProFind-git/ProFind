@@ -91,6 +91,8 @@ public class ProLoginRegisterActivity extends AppCompatActivity {
                 ProfessionalName.setVisibility(v.VISIBLE);
                 ProfessionalName.setEnabled(true);
 
+                Toast.makeText(ProLoginRegisterActivity.this,"Please Check your Connectivity",Toast.LENGTH_LONG).show();
+
             }
         });
 
